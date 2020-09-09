@@ -12,11 +12,13 @@ install:
 check-formatter:
 	which gofumpt || GO111MODULE=off go get -u mvdan.cc/gofumpt
 	which goimports || GO111MODULE=off go get -u golang.org/x/tools/cmd/goimports
+	which godot || GO111MODULE=off go get -u github.com/tetafro/godot/cmd/godot
 
 format: check-formatter
 	find $(ROOT) -type f -name "*.go" -not -path "$(ROOT)/vendor/*" | xargs -n 1 -I R goimports -w R
 	find $(ROOT) -type f -name "*.go" -not -path "$(ROOT)/vendor/*" | xargs -n 1 -I R gofmt -s -w R
 	find $(ROOT) -type f -name "*.go" -not -path "$(ROOT)/vendor/*" | xargs -n 1 -I R gofumpt -s -w R
+	find $(ROOT) -type f -name "*.go" -not -path "$(ROOT)/vendor/*" | xargs -n 1 -I R godot -w R
 
 check-linter:
 	which golangci-lint || GO111MODULE=off curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.23.1
