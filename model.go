@@ -1,7 +1,8 @@
 package lookups
 
 import (
-	"github.com/twpayne/go-geom/encoding/wkb"
+	"github.com/golang/geo/s2"
+	"github.com/twpayne/go-geom"
 )
 
 type (
@@ -13,9 +14,14 @@ type (
 		SequenceID int     `json:"sequence_id"`
 	}
 
-	PolyProps struct {
-		Props   Props        `json:"props"`
-		Polygon *wkb.Polygon `json:"polygon"`
+	GeomPolyProps struct {
+		Props   Props         `json:"props"`
+		Polygon *geom.Polygon `json:"polygon"`
+	}
+
+	S2PolyProps struct {
+		Props   Props       `json:"props"`
+		Polygon *s2.Polygon `json:"polygon"`
 	}
 
 	CoordinateProps struct {

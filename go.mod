@@ -2,4 +2,7 @@ module github.com/4lie/lookups
 
 go 1.15
 
-require github.com/twpayne/go-geom v1.3.6
+require (
+	github.com/golang/geo v0.0.0-20200730024412-e86565bf3f35
+	github.com/twpayne/go-geom v1.3.6
+)

@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	lookups.NewPipEngine(nil)
+	lookups.NewPipEngineFromGeom(nil)
+	lookups.NewPipEngineFromS2(nil)
 }
