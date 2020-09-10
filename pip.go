@@ -1,19 +1,22 @@
 package lookups
 
 type (
+	// Lookuper Is an interface for lookup services.
 	Lookuper interface {
-		Lookup(coordinates []Coordinate) ([]CoordinateProps, error)
+		Lookup(coordinates []Coordinate) []CoordinateProps
 	}
 
+	// PipEngine Is an engine for point in polygon.
 	PipEngine struct {
 	}
 )
 
 // NewPipEngine Create a new point in polygon engine.
-func NewPipEngine(polygons []PolyProps) (*PipEngine, error) {
-	return nil, nil
+func NewPipEngine(polygons []PolyProps) PipEngine {
+	return PipEngine{}
 }
 
-func (e *PipEngine) Lookup(coordinates []Coordinate) ([]CoordinateProps, error) {
-	return nil, nil
+// Lookup Return list of properties for the list of coordinates.
+func (e PipEngine) Lookup(coordinates []Coordinate) []CoordinateProps {
+	return []CoordinateProps{}
 }

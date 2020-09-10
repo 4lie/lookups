@@ -5,6 +5,8 @@ import (
 )
 
 type (
+	Props map[string]interface{}
+
 	Coordinate struct {
 		Latitude   float64 `json:"latitude"`
 		Longitude  float64 `json:"longitude"`
@@ -12,12 +14,12 @@ type (
 	}
 
 	PolyProps struct {
-		Polygon *wkb.Polygon           `json:"polygon"`
-		Props   map[string]interface{} `json:"props"`
+		Props   Props        `json:"props"`
+		Polygon *wkb.Polygon `json:"polygon"`
 	}
 
 	CoordinateProps struct {
+		Props      Props      `json:"props"`
 		Coordinate Coordinate `json:"coordinate"`
-		PolyProps  PolyProps  `json:"poly_props"`
 	}
 )
