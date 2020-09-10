@@ -19,7 +19,7 @@ type (
 	}
 
 	CoordinateProps struct {
-		Props      Props      `json:"props"`
+		Props      []Props    `json:"props"`
 		Coordinate Coordinate `json:"coordinate"`
 	}
 )
