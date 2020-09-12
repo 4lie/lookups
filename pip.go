@@ -11,13 +11,8 @@ type (
 	}
 )
 
-// NewPipEngine create a new point in polygon engine using geom library.
-func NewPipEngineFromGeom(polygons []GeomPolyProps) PipEngine {
-	return PipEngine{}
-}
-
-// NewPipEngine create a new point in polygon engine using s2 library.
-func NewPipEngineFromS2(polygons []S2PolyProps) PipEngine {
+// NewPipEngine create a new point in polygon engine using.
+func NewPipEngine(polygons []PolyProps) PipEngine {
 	return PipEngine{}
 }
 

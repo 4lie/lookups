@@ -14,7 +14,7 @@ type (
 		SequenceID int     `json:"sequence_id"`
 	}
 
-	GeomPolyProps struct {
+	PolyProps struct {
 		Props   Props         `json:"props"`
 		Polygon *geom.Polygon `json:"polygon"`
 	}
