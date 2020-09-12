@@ -1,7 +1,6 @@
 package lookups
 
 import (
-	"github.com/golang/geo/s2"
 	"github.com/twpayne/go-geom"
 )
 
@@ -17,11 +16,6 @@ type (
 	PolyProps struct {
 		Props   Props         `json:"props"`
 		Polygon *geom.Polygon `json:"polygon"`
-	}
-
-	S2PolyProps struct {
-		Props   Props       `json:"props"`
-		Polygon *s2.Polygon `json:"polygon"`
 	}
 
 	CoordinateProps struct {
