@@ -4,12 +4,11 @@ import (
 	"testing"
 
 	"github.com/4lie/lookups"
-
 	"github.com/golang/geo/s2"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestS2Hash(t *testing.T) {
+func TestLookups(t *testing.T) {
 	a := assert.New(t)
 
 	rawPolygon := [][]float64{
@@ -39,11 +38,32 @@ func TestS2Hash(t *testing.T) {
 
 	polygon := s2.PolygonFromLoops([]*s2.Loop{s2.LoopFromPoints(points)})
 
-	s := lookups.NewS2Hash(15)
+	l := lookups.New(lookups.DefaultS2CellLevel)
 
-	ids := s.Cover(polygon)
+	l.Set(lookups.PolyProps{
+		Props: map[string]interface{}{
+			"score": 20,
+		},
+		Polygon: polygon,
+	})
 
-	a.Len(ids, 2)
-	a.Contains(ids, "3f8dbf754")
-	a.Contains(ids, "3f8dbf75c")
+	r := l.Lookup([]lookups.Coordinate{
+		{
+			Latitude:  35.83738316403,
+			Longitude: 50.99430799484,
+		},
+		{
+			Latitude:  35.83599369842,
+			Longitude: 51.00250482559,
+		},
+	})
+
+	a.Len(r, 2)
+
+	a.Len(r[0].Props, 1)
+	s, ok := r[0].Props[0]["score"].(int)
+	a.True(ok)
+	a.Equal(20, s)
+
+	a.Empty(r[1].Props)
 }

@@ -1,4 +1,4 @@
-package lookups
+package index
 
 import (
 	"github.com/golang/geo/s2"
@@ -26,4 +26,8 @@ func (s S2Hash) Cover(polygon *s2.Polygon) []string {
 	}
 
 	return out
+}
+
+func (s S2Hash) Level() int {
+	return s.level
 }
