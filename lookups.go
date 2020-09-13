@@ -9,36 +9,40 @@ const (
 	DefaultS2CellLevel = 15
 )
 
+//nolint:gochecknoglobals
+var (
+	// Default value for geo indexer.
+	DefaultGeoIndexer = NewS2Index(DefaultS2CellLevel)
+)
+
 type (
 	// Lookuper is an interface for lookup services.
 	Lookuper interface {
 		Lookup(coordinates []Coordinate) []CoordinateProps
 	}
 
-	// Lookups is an engine of lookups.
+	// lookups is an engine of lookups.
 	lookups struct {
 		geoIndex    GeoIndex
 		geoPolygons map[string][]PolyProps
 	}
 )
 
-// NewWithS2 create a new Lookups instance using S2 geo index.
-func NewWithS2(polyProps []PolyProps, s2Level int) Lookuper {
-	geoIndex := NewS2Index(s2Level)
-
-	items := make(map[string][]PolyProps)
+// New returns a new lookups engine instance.
+func New(polyProps []PolyProps, geoIndex GeoIndex) Lookuper {
+	geoPolygons := make(map[string][]PolyProps)
 
 	for _, polyProp := range polyProps {
 		ids := geoIndex.Cover(polyProp.Polygon)
 
 		for _, id := range ids {
-			items[id] = append(items[id], polyProp)
+			geoPolygons[id] = append(geoPolygons[id], polyProp)
 		}
 	}
 
 	return &lookups{
 		geoIndex:    geoIndex,
-		geoPolygons: items,
+		geoPolygons: geoPolygons,
 	}
 }
 

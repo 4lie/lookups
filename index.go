@@ -2,22 +2,23 @@ package lookups
 
 import "github.com/golang/geo/s2"
 
+// GeoIndex is an interface for geo indexing.
 type GeoIndex interface {
 	Find(Coordinate) string
 	Cover(*s2.Polygon) []string
 }
 
-// S2Index is a S2-based polygon indexer.
+// S2Index is an s2-based polygon indexer.
 type S2Index struct {
 	level int
 }
 
-// NewS2Index returns a new S2 index instance.
+// NewS2Index returns a new s2 indexer instance.
 func NewS2Index(level int) S2Index {
 	return S2Index{level: level}
 }
 
-// Find return an S2 hash that contains the given point.
+// Find returns an s2 cell that contains the given point.
 func (s S2Index) Find(coordinate Coordinate) string {
 	ll := s2.LatLngFromDegrees(coordinate.Latitude, coordinate.Longitude)
 
