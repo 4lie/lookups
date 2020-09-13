@@ -4,15 +4,18 @@ import (
 	"github.com/golang/geo/s2"
 )
 
-type S2Hash struct {
+// S2 is a S2-based polygon indexer.
+type S2 struct {
 	level int
 }
 
-func NewS2Hash(level int) S2Hash {
-	return S2Hash{level: level}
+// NewS2 returns a new S2 instance.
+func NewS2(level int) S2 {
+	return S2{level: level}
 }
 
-func (s S2Hash) Cover(polygon *s2.Polygon) []string {
+// Covers returns all S2 cells inside the given polygon.
+func (s S2) Cover(polygon *s2.Polygon) []string {
 	if polygon.NumEdges() < 1 {
 		return []string{}
 	}
@@ -28,6 +31,7 @@ func (s S2Hash) Cover(polygon *s2.Polygon) []string {
 	return out
 }
 
-func (s S2Hash) Level() int {
+// Level returns S2 cell level.
+func (s S2) Level() int {
 	return s.level
 }

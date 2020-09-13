@@ -38,14 +38,14 @@ func TestLookups(t *testing.T) {
 
 	polygon := s2.PolygonFromLoops([]*s2.Loop{s2.LoopFromPoints(points)})
 
-	l := lookups.New(lookups.DefaultS2CellLevel)
-
-	l.Set(lookups.PolyProps{
-		Props: map[string]interface{}{
-			"score": 20,
+	l := lookups.New([]lookups.PolyProps{
+		{
+			Props: lookups.Props{
+				"score": 20,
+			},
+			Polygon: polygon,
 		},
-		Polygon: polygon,
-	})
+	}, lookups.DefaultS2CellLevel)
 
 	r := l.Lookup([]lookups.Coordinate{
 		{

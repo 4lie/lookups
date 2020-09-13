@@ -1,8 +1,6 @@
 package lookups
 
 import (
-	"sync"
-
 	"github.com/4lie/lookups/index"
 	"github.com/golang/geo/s2"
 )
@@ -18,44 +16,38 @@ type (
 		Lookup(coordinates []Coordinate) []CoordinateProps
 	}
 
-	// Engine is an engine of lookups.
-	Engine struct {
-		s2Hash index.S2Hash
-		mu     sync.RWMutex
-		items  map[string][]PolyProps
+	// Lookups is an engine of lookups.
+	Lookups struct {
+		index index.S2
+		items map[string][]PolyProps
 	}
 )
 
-// New create a new lookups instance.
-func New(s2Level int) *Engine {
-	return &Engine{
-		s2Hash: index.NewS2Hash(s2Level),
-		items:  make(map[string][]PolyProps),
+// New create a new Lookups instance.
+func New(polyProps []PolyProps, s2Level int) *Lookups {
+	i := index.NewS2(s2Level)
+	items := make(map[string][]PolyProps)
+
+	for _, polyProp := range polyProps {
+		ids := i.Cover(polyProp.Polygon)
+		for _, id := range ids {
+			items[id] = append(items[id], polyProp)
+		}
 	}
-}
 
-// Set sets the given polygon and it's properties.
-func (e *Engine) Set(polyProp PolyProps) {
-	e.mu.Lock()
-	defer e.mu.Unlock()
-
-	ids := e.s2Hash.Cover(polyProp.Polygon)
-
-	for _, id := range ids {
-		e.items[id] = append(e.items[id], polyProp)
+	return &Lookups{
+		index: i,
+		items: items,
 	}
 }
 
 // Lookup returns list of properties of given coordinates.
-func (e *Engine) Lookup(coordinates []Coordinate) []CoordinateProps {
-	e.mu.RLock()
-	defer e.mu.RUnlock()
-
+func (l *Lookups) Lookup(coordinates []Coordinate) []CoordinateProps {
 	out := make([]CoordinateProps, 0, len(coordinates))
 
 	for _, coordinate := range coordinates {
-		cell := e.cell(coordinate.Latitude, coordinate.Longitude)
-		candidates := e.items[cell]
+		cell := l.cell(coordinate.Latitude, coordinate.Longitude)
+		candidates := l.items[cell]
 		props := make([]Props, 0, len(candidates))
 
 		for _, candidate := range candidates {
@@ -76,11 +68,10 @@ func (e *Engine) Lookup(coordinates []Coordinate) []CoordinateProps {
 	return out
 }
 
-// cell find hex-encoded cell id of the given coordinate
-// according to level specified in the New function.
-func (e *Engine) cell(lat, lng float64) string {
+// cell finds hex-encoded cell id of the given coordinate according to level specified in the New function.
+func (l *Lookups) cell(lat, lng float64) string {
 	ll := s2.LatLngFromDegrees(lat, lng)
-	level := e.s2Hash.Level()
+	level := l.index.Level()
 
 	return s2.CellIDFromLatLng(ll).Parent(level).ToToken()
 }

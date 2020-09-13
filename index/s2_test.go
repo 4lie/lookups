@@ -39,7 +39,7 @@ func TestS2Hash(t *testing.T) {
 
 	polygon := s2.PolygonFromLoops([]*s2.Loop{s2.LoopFromPoints(points)})
 
-	s := index.NewS2Hash(15)
+	s := index.NewS2(15)
 
 	ids := s.Cover(polygon)
 
