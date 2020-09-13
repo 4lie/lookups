@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	lookups.NewPipEngine(nil)
+	lookups.New(lookups.DefaultS2CellLevel)
 }
