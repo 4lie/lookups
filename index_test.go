@@ -1,15 +1,15 @@
-package index_test
+package lookups_test
 
 import (
 	"testing"
 
-	"github.com/4lie/lookups/index"
+	"github.com/4lie/lookups"
 
 	"github.com/golang/geo/s2"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestS2Hash(t *testing.T) {
+func TestS2Index(t *testing.T) {
 	a := assert.New(t)
 
 	rawPolygon := [][]float64{
@@ -39,7 +39,7 @@ func TestS2Hash(t *testing.T) {
 
 	polygon := s2.PolygonFromLoops([]*s2.Loop{s2.LoopFromPoints(points)})
 
-	s := index.NewS2(15)
+	s := lookups.NewS2Index(15)
 
 	ids := s.Cover(polygon)
 

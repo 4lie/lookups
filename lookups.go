@@ -1,7 +1,6 @@
 package lookups
 
 import (
-	"github.com/4lie/lookups/index"
 	"github.com/golang/geo/s2"
 )
 
@@ -17,37 +16,39 @@ type (
 	}
 
 	// Lookups is an engine of lookups.
-	Lookups struct {
-		index index.S2
-		items map[string][]PolyProps
+	lookups struct {
+		geoIndex    GeoIndex
+		geoPolygons map[string][]PolyProps
 	}
 )
 
-// New create a new Lookups instance.
-func New(polyProps []PolyProps, s2Level int) *Lookups {
-	i := index.NewS2(s2Level)
+// NewWithS2 create a new Lookups instance using S2 geo index.
+func NewWithS2(polyProps []PolyProps, s2Level int) Lookuper {
+	geoIndex := NewS2Index(s2Level)
+
 	items := make(map[string][]PolyProps)
 
 	for _, polyProp := range polyProps {
-		ids := i.Cover(polyProp.Polygon)
+		ids := geoIndex.Cover(polyProp.Polygon)
+
 		for _, id := range ids {
 			items[id] = append(items[id], polyProp)
 		}
 	}
 
-	return &Lookups{
-		index: i,
-		items: items,
+	return &lookups{
+		geoIndex:    geoIndex,
+		geoPolygons: items,
 	}
 }
 
 // Lookup returns list of properties of given coordinates.
-func (l *Lookups) Lookup(coordinates []Coordinate) []CoordinateProps {
-	out := make([]CoordinateProps, 0, len(coordinates))
+func (l lookups) Lookup(coordinates []Coordinate) []CoordinateProps {
+	result := make([]CoordinateProps, 0, len(coordinates))
 
 	for _, coordinate := range coordinates {
-		cell := l.cell(coordinate.Latitude, coordinate.Longitude)
-		candidates := l.items[cell]
+		cell := l.geoIndex.Find(coordinate)
+		candidates := l.geoPolygons[cell]
 		props := make([]Props, 0, len(candidates))
 
 		for _, candidate := range candidates {
@@ -59,19 +60,11 @@ func (l *Lookups) Lookup(coordinates []Coordinate) []CoordinateProps {
 			}
 		}
 
-		out = append(out, CoordinateProps{
+		result = append(result, CoordinateProps{
 			Props:      props,
 			Coordinate: coordinate,
 		})
 	}
 
-	return out
-}
-
-// cell finds hex-encoded cell id of the given coordinate according to level specified in the New function.
-func (l *Lookups) cell(lat, lng float64) string {
-	ll := s2.LatLngFromDegrees(lat, lng)
-	level := l.index.Level()
-
-	return s2.CellIDFromLatLng(ll).Parent(level).ToToken()
+	return result
 }
