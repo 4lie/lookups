@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-//nolint: funlen
+//nolint:funlen
 func TestLookups(t *testing.T) {
 	tests := []struct {
 		name           string
@@ -268,7 +268,7 @@ func TestLookups(t *testing.T) {
 
 			a.Equal(len(test.expectedResult), len(test.queries))
 
-			l := lookups.New(test.polyProps, lookups.NewS2Index(lookups.DefaultS2CellLevel))
+			l := lookups.New(test.polyProps, lookups.DefaultGeoIndexer)
 
 			result := l.Lookup(test.queries)
 
