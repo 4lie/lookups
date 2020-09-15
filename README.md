@@ -24,3 +24,13 @@ go get github.com/4lie/lookups
 [4]: https://codecov.io/gh/4lie/lookups
 [5]: https://img.shields.io/github/license/4lie/lookups?style=flat-square
 [6]: https://opensource.org/licenses/mit-license.php
+
+## Examples
+`lookups_test.go` contains several useful examples. You can check visualizations of them here.
+
+| Image                                       | Description                |
+|---------------------------------------------|----------------------------|
+| <img src="./images/index.png" width="350"/> | How indexing works         |
+| <img src="./images/1.png" width="350"/>     | Simple polygon example     |
+| <img src="./images/2.png" width="350"/>     | Polygon with holes example |
+| <img src="./images/3.png" width="350"/>     | Multiple polygons example  |
