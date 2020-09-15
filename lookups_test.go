@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/4lie/lookups"
-	"github.com/golang/geo/s2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +18,7 @@ func TestLookups(t *testing.T) {
 		{
 			name: "simple polygon",
 			polyProps: []lookups.PolyProps{
-				polyPropsFromCoordinates([][]lookups.Coordinate{
+				lookups.PolyPropsFromCoordinates([][]lookups.Coordinate{
 					{
 						{
 							Latitude:  35.837037430733666,
@@ -64,7 +63,7 @@ func TestLookups(t *testing.T) {
 		{
 			name: "polygon with holes",
 			polyProps: []lookups.PolyProps{
-				polyPropsFromCoordinates([][]lookups.Coordinate{
+				lookups.PolyPropsFromCoordinates([][]lookups.Coordinate{
 					{
 						{
 							Latitude:  35.839542,
@@ -147,7 +146,7 @@ func TestLookups(t *testing.T) {
 		{
 			name: "polygon with holes and a simple polygon",
 			polyProps: []lookups.PolyProps{
-				polyPropsFromCoordinates([][]lookups.Coordinate{
+				lookups.PolyPropsFromCoordinates([][]lookups.Coordinate{
 					{
 						{
 							Latitude:  35.839542,
@@ -200,7 +199,7 @@ func TestLookups(t *testing.T) {
 						"polygon": "blue",
 					},
 				),
-				polyPropsFromCoordinates([][]lookups.Coordinate{
+				lookups.PolyPropsFromCoordinates([][]lookups.Coordinate{
 					{
 						{
 							Latitude:  35.84163,
@@ -279,33 +278,4 @@ func TestLookups(t *testing.T) {
 			}
 		})
 	}
-}
-
-func polyPropsFromCoordinates(in [][]lookups.Coordinate, props map[string]interface{}) lookups.PolyProps {
-	return lookups.PolyProps{
-		Polygon: polygonFromCoordinates(in),
-		Props:   props,
-	}
-}
-
-func polygonFromCoordinates(in [][]lookups.Coordinate) *s2.Polygon {
-	loops := make([]*s2.Loop, 0, len(in))
-
-	for _, l := range in {
-		loop := loopFromCoordinates(l)
-		loop.Normalize()
-		loops = append(loops, loop)
-	}
-
-	return s2.PolygonFromLoops(loops)
-}
-
-func loopFromCoordinates(in []lookups.Coordinate) *s2.Loop {
-	points := make([]s2.Point, 0, len(in))
-
-	for _, p := range in {
-		points = append(points, s2.PointFromLatLng(s2.LatLngFromDegrees(p.Latitude, p.Longitude)))
-	}
-
-	return s2.LoopFromPoints(points)
 }
