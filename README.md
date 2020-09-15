@@ -6,9 +6,10 @@
 
 ## Introduction
 
-Fast and in memory geo lookup library.
-It can find a polygon from your given polygons that contains a given point.
-For indexing it uses S2 Library and it is super-fast :rocket:.
+Fast and in-memory geo lookup library.
+
+Simply add polygons and run queries.
+It uses Google's S2 Library for indexing and it's super fast :rocket:.
 
 ## Usage
 
