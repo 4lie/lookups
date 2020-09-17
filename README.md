@@ -3,6 +3,7 @@
 [![Build Status][1]][2]
 [![codecov][3]][4]
 [![MIT Licence][5]][6]
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/4lie/lookups)](https://pkg.go.dev/github.com/4lie/lookups)
 
 ## Introduction
 
