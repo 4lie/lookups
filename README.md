@@ -12,9 +12,7 @@ Fast and in-memory geo lookup library.
 Simply add polygons and run queries.
 It uses Google's S2 Library for indexing and it's super fast :rocket:.
 
-## Usage
-
-* Install
+## Install
 
 ``` bash
 go get github.com/4lie/lookups
@@ -28,6 +26,7 @@ go get github.com/4lie/lookups
 [6]: https://opensource.org/licenses/mit-license.php
 
 ## Examples
+
 `lookups_test.go` contains several useful examples. You can check visualizations of them here.
 
 | Image                                       | Description                |
