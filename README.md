@@ -1,8 +1,6 @@
 # Geo Lookups
 
-[![Build Status][1]][2]
-[![codecov][3]][4]
-[![MIT Licence][5]][6]
+[![Build](https://github.com/4lie/lookups/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/4lie/lookups/actions/workflows/build.yml)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/4lie/lookups)](https://pkg.go.dev/github.com/4lie/lookups)
 
 ## Introduction
@@ -17,13 +15,6 @@ It uses Google's S2 Library for indexing and it's super fast :rocket:.
 ``` bash
 go get github.com/4lie/lookups
 ```
-
-[1]: https://img.shields.io/travis/4lie/lookups?logo=travis&style=flat-square
-[2]: https://travis-ci.org/4lie/lookups
-[3]: https://img.shields.io/codecov/c/gh/4lie/lookups?logo=codecov&style=flat-square
-[4]: https://codecov.io/gh/4lie/lookups
-[5]: https://img.shields.io/github/license/4lie/lookups?style=flat-square
-[6]: https://opensource.org/licenses/mit-license.php
 
 ## Examples
 
