@@ -1,6 +1,6 @@
 # Geo Lookups
 
-[![Build](https://github.com/4lie/lookups/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/4lie/lookups/actions/workflows/build.yml)
+[![Build](https://github.com/4lie/lookups/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/4lie/lookups/actions/workflows/main.yml)
 [![PkgGoDev](https://pkg.go.dev/badge/github.com/4lie/lookups)](https://pkg.go.dev/github.com/4lie/lookups)
 
 ## Introduction
