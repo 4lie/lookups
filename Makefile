@@ -21,7 +21,7 @@ format: check-formatter
 	find $(ROOT) -type f -name "*.go" -not -path "$(ROOT)/vendor/*" | xargs -n 1 -I R godot -w R
 
 check-linter:
-	which golangci-lint || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.12.2
+	which golangci-lint || curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.15.0
 
 lint: check-linter
 	golangci-lint run --timeout 10m $(ROOT)/...

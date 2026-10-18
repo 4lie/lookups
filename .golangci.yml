@@ -9,6 +9,7 @@ linters:
   disable:
     - depguard # needs an allow-list config to be useful
     - exhaustruct
+    - exhaustruct_v5
     - forbidigo # the example prints its results
     - goconst
     - gomodguard # deprecated in favour of gomodguard_v2
