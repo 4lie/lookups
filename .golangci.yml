@@ -1,33 +1,49 @@
-# This file contains all available configuration options
-# with their default values.
-
-# options for analysis running
+version: "2"
 run:
-  # default concurrency is a available CPU number
   concurrency: 4
-
-  # timeout for analysis, e.g. 30s, 5m, default is 1m
-  deadline: 10m
-
-  # exit code when at least one issue was found, default is 1
   issues-exit-code: 1
-
-  # include test files or not, default is true
   tests: true
-
-# all available settings of specific linters
-linters-settings:
-  dupl:
-    # tokens count to trigger issue, 150 by default
-    threshold: 200
-
 linters:
-  enable-all: true
-
-issues:
-  # Excluding configuration per-path, per-linter, per-text and per-source
-  exclude-rules:
-    - path: \.go
-      linters:
-        - gci
-        - nolintlint
+  default: all
+  # Linters added after this config was written that conflict with the existing API or style.
+  disable:
+    - depguard # needs an allow-list config to be useful
+    - exhaustruct
+    - forbidigo # the example prints its results
+    - goconst
+    - gomodguard # deprecated in favour of gomodguard_v2
+    - ireturn # New returns the Lookuper interface by design
+    - mnd # coordinates in tests and the example
+    - paralleltest
+    - tagliatelle # changing JSON tags would break the wire format
+    - varnamelen
+    - wsl # deprecated in favour of wsl_v5
+  settings:
+    dupl:
+      threshold: 200
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - nolintlint
+        path: \.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

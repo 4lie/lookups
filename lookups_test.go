@@ -265,13 +265,13 @@ func TestLookups(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			a := assert.New(t)
 
-			a.Equal(len(test.expectedResult), len(test.queries))
+			a.Len(test.queries, len(test.expectedResult))
 
 			l := lookups.New(test.polyProps, lookups.DefaultGeoIndexer)
 
 			result := l.Lookup(test.queries)
 
-			a.Equal(len(test.queries), len(result))
+			a.Len(result, len(test.queries))
 
 			for i := range result {
 				a.Equal(test.expectedResult[i], result[i].Props)

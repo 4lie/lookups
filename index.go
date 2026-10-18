@@ -4,8 +4,8 @@ import "github.com/golang/geo/s2"
 
 // GeoIndex is an interface for geo indexing.
 type GeoIndex interface {
-	Find(Coordinate) string
-	Cover(*s2.Polygon) []string
+	Find(coordinate Coordinate) string
+	Cover(polygon *s2.Polygon) []string
 }
 
 // S2Index is an s2-based polygon indexer.
@@ -25,7 +25,7 @@ func (s S2Index) Find(coordinate Coordinate) string {
 	return s2.CellIDFromLatLng(ll).Parent(s.level).ToToken()
 }
 
-// Covers returns all S2 cells that cover the given polygon.
+// Cover returns all S2 cells that cover the given polygon.
 func (s S2Index) Cover(polygon *s2.Polygon) []string {
 	if polygon.NumEdges() < 1 {
 		return []string{}

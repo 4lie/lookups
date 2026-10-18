@@ -12,17 +12,17 @@ jobs:
 
   build:
     name: Build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Install go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v7
         with:
-          go-version: 1.15
-      - name: Install golangci-lint
-        run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.30.0
+          go-version: stable
       - name: Lint
-        run: make lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.12.2
       - name: Test
         run: make test

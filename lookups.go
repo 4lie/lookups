@@ -5,13 +5,13 @@ import (
 )
 
 const (
-	// Default level of s2 cells.
+	// DefaultS2CellLevel is the default level of s2 cells.
 	DefaultS2CellLevel = 15
 )
 
 //nolint:gochecknoglobals
 var (
-	// Default value for geo indexer.
+	// DefaultGeoIndexer is the default geo indexer.
 	DefaultGeoIndexer = NewS2Index(DefaultS2CellLevel)
 )
 

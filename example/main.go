@@ -6,7 +6,7 @@ import (
 	"github.com/4lie/lookups"
 )
 
-//nolint:gomnd,funlen
+//nolint:mnd,funlen
 func main() {
 	polyProps := []lookups.PolyProps{
 		lookups.PolyPropsFromCoordinates([][]lookups.Coordinate{
